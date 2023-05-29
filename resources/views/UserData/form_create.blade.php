@@ -1,19 +1,17 @@
 @extends('layouts.main')
 
-@section('title', 'Update')
+@section('title', 'Tambah User Data')
 
 @section('container')
 <div class="container-fluid">
     <div class="container-fluid">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title fw-semibold mb-4">Edit data Donasi</h5>
+          <h5 class="card-title fw-semibold mb-4">Tambah Data User</h5>
           <div class="card">
             <div class="card-body">
-              @foreach ($data as $row)
-              <form action="{{ route('Donasi.update', $row->id) }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('UserData.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('patch')
                 <div class="mb-3">
                   <label for="nama" class="form-label">Nama Lengkap</label>
                   <input type="text" 
@@ -21,7 +19,7 @@
                     @error('nama')
                         is-invalid
                     @enderror"
-                    value="{{ old('nama', $row->nama) }}" id="nama" name="nama">
+                    value="{{ old('nama') }}" id="nama" name="nama">
                     {{-- pesan error --}}
                     @error('nama')
                     <div class="invalid-feedback">
@@ -37,8 +35,8 @@
                     @enderror" 
                     name="gender" id="gender">
                         <option selected disabled>Pilih Jenis Kelamin</option>
-                        <option value="Laki - laki" @if (old('gender', $row->gender) == "Laki - laki") {{ 'selected' }} @endif>Laki - Laki</option>
-                        <option value="Perempuan" @if (old('gender', $row->gender) == "Perempuan") {{ 'selected' }} @endif>Perempuan</option>
+                        <option value="Laki - laki" @if (old('gender') == "Laki - laki") {{ 'selected' }} @endif>Laki - Laki</option>
+                        <option value="Perempuan" @if (old('gender') == "Perempuan") {{ 'selected' }} @endif>Perempuan</option>
                     </select>
                     {{-- pesan error --}}
                     @error('gender')
@@ -53,7 +51,7 @@
                     @error('no_kk')
                         is-invalid
                     @enderror "
-                    type="number" name="no_kk" id="no_kk" value="{{ old('no_kk', $row->no_kk) }}">
+                    type="number" name="no_kk" id="no_kk" value="{{ old('no_kk') }}">
                     {{-- pesan error --}}
                     @error('no_kk')
                         <div class="invalid-feedback">
@@ -67,7 +65,7 @@
                     @error('no_telp')
                         is-invalid
                     @enderror "
-                  type="text" name="no_telp" id="no_telp" value="{{ old('no_telp', $row->no_telp) }}">
+                  type="text" name="no_telp" id="no_telp" value="{{ old('no_telp') }}">
                   {{-- pesan error --}}
                     @error('no_telp')
                     <div class="invalid-feedback">
@@ -81,31 +79,16 @@
                     @error('alamat')
                         is-invalid
                     @enderror "
-                    type="text" name="alamat" id="alamat">{{ old('alamat', $row->alamat) }}</textarea>
+                    type="text" name="alamat" id="alamat">{{ old('alamat') }}</textarea>
                     @error('alamat')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="file" class="form-label">File</label>
-                    <input class="form-control
-                      @error('file')
-                          is-invalid
-                      @enderror "
-                    type="file" name="file" id="file" value="{{ old('file', $row->file) }}">
-                    {{-- pesan error --}}
-                      @error('file')
-                      <div class="invalid-feedback">
-                          {{ $message }}
-                      </div>
-                      @enderror
-                  </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ route('Donasi.index') }}" class="btn btn-default float-right">Cancel</a>
+                <a href="{{ route('UserData.index') }}" class="btn btn-default float-right">Cancel</a>
               </form>
-              @endforeach
             </div>
           </div>          
         </div>

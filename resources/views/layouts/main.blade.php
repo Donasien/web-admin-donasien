@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     @include('layouts.head')
-    <title>@yield('title')Test</title>
+    <title>@yield('title') - Title</title>
 </head>
 <body>
     <!--  Body Wrapper -->

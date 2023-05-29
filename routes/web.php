@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\UserDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,11 +16,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/',[LayoutController::class, 'index'])->middleware('auth');
+Route::get('/Dashboard',[LayoutController::class, 'index'])->middleware('auth');
 
-Route::get('/', function () {
-    return view('Dashboard.dashboard');
+Route::controller(LoginController::class)->group(function(){
+    Route::get('login', 'index')->name('login');
+    Route::post('login/proses', 'proses');
+    Route::get('logout', 'logout');
 });
 
-Route::get('/Donasi', function () {
-    return view('Donations.index');
+Route::group(['middleware' => ['auth']], function(){
+    
+    Route::resource('Donasi', DonasiController::class);
+    Route::resource('UserData', UserDataController::class);
 });
+
+
+

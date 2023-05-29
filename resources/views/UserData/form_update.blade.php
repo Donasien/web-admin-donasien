@@ -1,17 +1,17 @@
 @extends('layouts.main')
 
-@section('title', 'Update')
+@section('title', 'Update User Data')
 
 @section('container')
 <div class="container-fluid">
     <div class="container-fluid">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title fw-semibold mb-4">Edit data Donasi</h5>
+          <h5 class="card-title fw-semibold mb-4">Edit Data User</h5>
           <div class="card">
             <div class="card-body">
               @foreach ($data as $row)
-              <form action="{{ route('Donasi.update', $row->id) }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('UserData.update', $row->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('patch')
                 <div class="mb-3">
@@ -88,22 +88,8 @@
                         </div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="file" class="form-label">File</label>
-                    <input class="form-control
-                      @error('file')
-                          is-invalid
-                      @enderror "
-                    type="file" name="file" id="file" value="{{ old('file', $row->file) }}">
-                    {{-- pesan error --}}
-                      @error('file')
-                      <div class="invalid-feedback">
-                          {{ $message }}
-                      </div>
-                      @enderror
-                  </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ route('Donasi.index') }}" class="btn btn-default float-right">Cancel</a>
+                <a href="{{ route('UserData.index') }}" class="btn btn-default float-right">Cancel</a>
               </form>
               @endforeach
             </div>

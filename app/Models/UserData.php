@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Donasi extends Model
+class UserData extends Model
 {
     use HasFactory;
 
     // Mapping Tabel 
-    protected $table = 'donasi';
+    protected $table = 'user_data';
 }

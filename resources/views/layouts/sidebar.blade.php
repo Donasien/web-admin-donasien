@@ -3,7 +3,7 @@
     <!-- Sidebar scroll-->
     <div>
       <div class="brand-logo d-flex align-items-center justify-content-between">
-        <a href="./index.html" class="text-nowrap logo-img">
+        <a href="{{ url('/Dashboard') }}" class="text-nowrap logo-img">
           {{-- <img src="{{ asset('assets/images/logos/dark-logo.svg') }}" width="180" alt="" /> --}}
           <h2>Logo</h2>
         </a>
@@ -19,7 +19,7 @@
             <span class="hide-menu">Home</span>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ url('/') }}" aria-expanded="false">
+            <a class="sidebar-link" href="{{ url('/Dashboard') }}" aria-expanded="false">
               <span>
                 <i class="ti ti-layout-dashboard"></i>
               </span>
@@ -31,7 +31,7 @@
             <span class="hide-menu">Donasi</span>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+            <a class="sidebar-link" href="{{ url('/UserData') }}" aria-expanded="false">
               <span>
                 <i class="ti ti-user"></i>
               </span>
@@ -51,19 +51,11 @@
             <span class="hide-menu">AUTH</span>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+            <a class="sidebar-link" href="{{ url('logout') }}" aria-expanded="false">
               <span>
                 <i class="ti ti-login"></i>
               </span>
               <span class="hide-menu">Login</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
-              <span>
-                <i class="ti ti-user-plus"></i>
-              </span>
-              <span class="hide-menu">Register</span>
             </a>
           </li>
         </ul>

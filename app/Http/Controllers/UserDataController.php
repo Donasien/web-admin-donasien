@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class DonasiController extends Controller
+class UserDataController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class DonasiController extends Controller
      */
     public function index()
     {
-        $ar_donasi = DB::table('donasi')->get();
-        return view('Donations.index', compact('ar_donasi'));
+        $ar_user = DB::table('user_data')->get();
+        return view('UserData.index', compact('ar_user'));
     }
 
     /**
@@ -26,7 +26,7 @@ class DonasiController extends Controller
      */
     public function create()
     {
-        return view('Donations.form_create');
+        return view('UserData.form_create');
     }
 
     /**
@@ -44,7 +44,6 @@ class DonasiController extends Controller
                 'no_kk' => 'required',
                 'no_telp' => 'required',
                 'alamat' => 'required',
-                'file' => 'required'
             ],
             [
                 'nama.required' => 'Kolom Nama harus diisi',
@@ -52,36 +51,22 @@ class DonasiController extends Controller
                 'no_kk.required' => 'Kolom No KK harus diisi',
                 'no_telp.required' => 'Kolom No Telp harus diisi',
                 'alamat.required' => 'Kolom Alamat harus diisi',
-                'file.required' => 'Kolom File harus diisi'
             ]
             
 
         );
 
-        if(!empty($request->file)){
-            $request->validate([
-            'file' => 'image|mimes:jpg,jpeg,png,giff|max:20000',
-            ]);
-            $fileName = $request->nama.'_'.$request->gender.'_'.$request->no_kk.'_'.$request->no_telp.'_'.$request->alamat.'.'.$request->file->extension();
-            //$fileName = tanggal_idcustomer_judul.'.jpg';
-            $request->file->move(public_path('images/Donasi'), $fileName);
-        }   
-        else {
-            $fileName = '';
-        }
-
-        DB::table('donasi')->insert(
+        DB::table('user_data')->insert(
             [
                 'nama'=>$request->nama,
                 'gender'=>$request->gender,
                 'no_kk'=>$request->no_kk,
                 'no_telp'=>$request->no_telp,
                 'alamat'=>$request->alamat,
-                'file'=>$fileName,
             ]
         );
 
-        return redirect('/Donasi')->with('success','Data berhasil ditambahkan');
+        return redirect('/UserData')->with('success','Data berhasil ditambahkan');
     }
 
     /**
@@ -103,10 +88,10 @@ class DonasiController extends Controller
      */
     public function edit($id)
     {
-        $data = DB::table('donasi')
+        $data = DB::table('user_data')
          ->where('id', '=', $id)
          ->get();
-         return view('Donations.form_update', compact('data'));
+         return view('UserData.form_update', compact('data'));
     }
 
     /**
@@ -125,7 +110,6 @@ class DonasiController extends Controller
                 'no_kk' => 'required',
                 'no_telp' => 'required',
                 'alamat' => 'required',
-                'file' => 'required'
             ],
             [
                 'nama.required' => 'Kolom Nama harus diisi',
@@ -133,49 +117,23 @@ class DonasiController extends Controller
                 'no_kk.required' => 'Kolom No KK harus diisi',
                 'no_telp.required' => 'Kolom No Telp harus diisi',
                 'alamat.required' => 'Kolom Alamat harus diisi',
-                'file.required' => 'Kolom File harus diisi'
             ]
             
         );
 
-        if(!empty($request->file)){
-            //ambil isi kolom file lalu hapus file filenya di folder images
-            $file = DB::table('donasi')->select('file')->where('id','=',$id)->get();
-            foreach($file as $f){
-                $namaFile = $f->file;
-            }
-            File::delete(public_path('images/Donasi/'.$namaFile));
-            //proses upload file baru
-            $request->validate([
-                'file' => 'image|mimes:jpg,jpeg,png,giff|max:20000',
-            ]);
-            $fileName = $request->nama.'_'.$request->gender.'_'.$request->no_kk.'_'.$request->no_telp.'_'.$request->alamat.'.'.$request->file->extension();
-            //$fileName = tanggal_idcustomer_judul.'.jpg';
-            $request->file->move(public_path('images/Donasi'), $fileName);
-        }
-        // Kode program di bawah ini merupakan lanjutan dari proses edit data pembayaran jika tidak  mengubah file pembayaran
-        else{
-            //ambil isi kolom file lalu hapus file filenya di folder images
-            $file = DB::table('donasi')->select('file')->where('id','=',$id)->get();
-            foreach($file as $f) {
-                $namaFile = $f->file;
-            }
-            $fileName = $namaFile;
-        }
 
-        DB::table('donasi')->where('id', '=', $id)->update(
+        DB::table('user_data')->where('id', '=', $id)->update(
             [
                 'nama'=>$request->nama,
                 'gender'=>$request->gender,
                 'no_kk'=>$request->no_kk,
                 'no_telp'=>$request->no_telp,
                 'alamat'=>$request->alamat,
-                'file'=>$fileName,
             ]
         );
 
         // 2. Landing Page
-        return redirect('/Donasi')->with('success','Data berhasil diupdate');
+        return redirect('/UserData')->with('success','Data berhasil diupdate');
     }
 
     /**
@@ -186,15 +144,9 @@ class DonasiController extends Controller
      */
     public function destroy($id)
     {
-        $file = DB::table('donasi')->select('file')
-        ->where('id','=',$id)->get();
-        foreach($file as $f){
-            $namaFile = $f->file;
-        }
-        File::delete(public_path('images/Donasi/'.$namaFile));
 
         // Menghapus Data
-        DB::table('donasi')->where('id', $id)->delete();
-        return redirect('Donasi')->with('success','Data berhasil dihapus');
+        DB::table('user_data')->where('id', $id)->delete();
+        return redirect('UserData')->with('success','Data berhasil dihapus');
     }
 }
